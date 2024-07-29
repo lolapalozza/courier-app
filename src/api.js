@@ -16,11 +16,7 @@ const httpClient = axios.create({
 
 export const fetchCities = async () => {
   try {
-    const response = await httpClient.get(`${apiUrl}/cities`, {
-      headers: {
-        'Content-Security-Policy': 'upgrade-insecure-requests'
-      },
-    });
+    const response = await httpClient.get(`${apiUrl}/cities`);
     console.log('Fetched cities:', response.data);
     return response.data;
   } catch (error) {
@@ -42,11 +38,7 @@ export const fetchProducts = async () => {
 
 export const fetchDistricts = async (cityId) => {
   try {
-    const response = await httpClient.get(`${apiUrl}/cities/${cityId}/districts`, {
-      headers: {
-        'Content-Security-Policy': 'upgrade-insecure-requests'
-      },
-    });
+    const response = await httpClient.get(`${apiUrl}/cities/${cityId}/districts`);
     console.log('Fetched districts:', response.data);
     return response.data;
   } catch (error) {
