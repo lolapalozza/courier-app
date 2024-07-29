@@ -43,7 +43,6 @@ const App = () => {
     }
 
     const dropData = {
-      courierId: 1,
       cityId: data.city.id,
       districtId: data.district.id,
       packageId: data.package.id,
