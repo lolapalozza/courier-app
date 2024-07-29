@@ -13,9 +13,7 @@ export const authorization = {
         //   window.Telegram.WebApp.initDataUnsafe &&
         //   window.Telegram.WebApp.initDataUnsafe.user) {
           clearInterval(interval);
-          // const initData = window.Telegram.WebApp.initData;
-          const initData = 'query_id=AAGYEdk-AAAAAJgR2T7stF57&user=%7B%22id%22%3A1054413208%2C%22first_name%22%3A%22Fyodor%22%2C%22last_name%22%3A%22Khruschov%22%2C%22username%22%3A%22elevenmins%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1721316039&hash=69bf3ee5020e663b85db82e3d321956a28e334929781977249aa46d5eb4df934'
-          //
+          const initData = window.Telegram.WebApp.initData;
           const result = authorization.isValidHash(initData);
           // if (result) {
             httpClient.defaults.headers['tg_query'] = initData;
