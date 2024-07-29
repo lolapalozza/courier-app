@@ -90,6 +90,9 @@ const App = () => {
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 600, margin: 'auto', padding: 2 }}>
       <Grid container spacing={2}>
+
+        {isAuth ? "AUTH" : "NOT AUTH"}
+
         <Grid item xs={12}>
           <Controller
             name="city"
