@@ -21,11 +21,16 @@ const App = () => {
   const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
-    authorization.init().then((data) => {
-      if(data.result){
-        setIsAuth(true)
-      }
-    })
+    if(process.env.REACT_APP_ENV === 'local'){
+      setIsAuth(true)
+    }else{
+      authorization.init().then((data) => {
+        if(data.result){
+          setIsAuth(true)
+        }
+      })
+    }
+
   }, [])
 
   useEffect(() => {

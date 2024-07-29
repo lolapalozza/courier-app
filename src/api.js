@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const telegramId = 1054413208; // for debug API telegramId = 123456
+const telegramId = 1054413208; //
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const httpClient = axios.create({
@@ -65,6 +65,9 @@ export const submitDrop = async (formData) => {
     });
     return response.data
   } catch(e){
-    throw(e)
+    return {
+      success: false,
+      error: "user is not a courier"
+    }
   }
 }
