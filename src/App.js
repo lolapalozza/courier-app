@@ -1,78 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Box, Typography, Autocomplete, CircularProgress, Grid, IconButton } from '@mui/material';
-import axios from 'axios';
-
-const apiToken = '1c4c00c76bd2d59902a983d304481a2a';
-const telegramId = 1; // for debug API telegramId = 123456
-const apiUrl = "http://localhost:8080"
-// const apiUrl = "https://debug.soda4d.com";
-
-const fetchCities = async () => {
-  try {
-    const response = await axios.get(`${apiUrl}/cities`, {
-      headers: {
-        'api_token': apiToken,
-        'telegram_id': telegramId,
-        'Content-Security-Policy': 'upgrade-insecure-requests'
-      },
-    });
-    console.log('Fetched cities:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('fetch cities:', error);
-    return [];
-  }
-};
-
-const fetchProducts = async () => {
-  try {
-    const response = await axios.get(`${apiUrl}/products/all`, {
-      headers: {
-        'api_token': apiToken,
-        'telegram_id': telegramId,
-      },
-    });
-    console.log('Fetched products:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('fetch products:', error);
-    return {};
-  }
-};
-
-const fetchDistricts = async (cityId) => {
-  try {
-    const response = await axios.get(`${apiUrl}/cities/${cityId}/districts`, {
-      headers: {
-        'api_token': apiToken,
-        'telegram_id': telegramId,
-        'Content-Security-Policy': 'upgrade-insecure-requests'
-      },
-    });
-    console.log('Fetched districts:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch districts:', error);
-    return [];
-  }
-};
-
-const fetchPackages = async (productId) => {
-  try {
-    const response = await axios.get(`${apiUrl}/products/${productId}/packages`, {
-      headers: {
-        'api_token': apiToken,
-        'telegram_id': telegramId,
-      },
-    });
-    console.log('Fetched packages:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch packages:', error);
-    return [];
-  }
-};
+import {fetchCities, fetchDistricts, fetchPackages, fetchProducts, submitDrop} from "./api.js";
 
 const App = () => {
   const { control, handleSubmit, setValue } = useForm();
@@ -100,7 +29,7 @@ const App = () => {
     }
 
     const dropData = {
-      courierId: telegramId,
+      courierId: 1,
       cityId: data.city.id,
       districtId: data.district.id,
       packageId: data.package.id,
@@ -114,34 +43,24 @@ const App = () => {
       formData.append('photos', file);
     });
 
-    try {
-      const response = await axios.post(apiUrl + '/drop', formData, {
-        headers: {
-          'api_token': apiToken,
-          'telegram_id': telegramId,
-          'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json',
-        },
-      });
+    const result = await submitDrop(formData)
 
-      if (response.status === 200) {
-        setSuccessMessage('Успех');
-        setErrorMessage('');
-        setValue('comment', '');
-        setSelectedFiles([]);
-        fileInputRef.current.value = null;
-      } else {
-        setErrorMessage('Ошибка');
+    if(result.success){
+      setSuccessMessage('Успех');
+
+      setTimeout(() => {
         setSuccessMessage('');
-      }
-    } catch (error) {
-      if (error.response) {
-        console.error('Ошибка:', error.response.data);
-      } else {
-        setErrorMessage('Ошибка');
-      }
+      }, 4000)
+
+      setErrorMessage('');
+      setValue('comment', '');
+      setSelectedFiles([]);
+      fileInputRef.current.value = null;
+    }else{
+      setErrorMessage('Ошибка');
       setSuccessMessage('');
     }
+
   };
 
   const handleFileChange = (e) => {
