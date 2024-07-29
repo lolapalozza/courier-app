@@ -1,16 +1,12 @@
 import axios from "axios";
 
-const apiToken = '1c4c00c76bd2d59902a983d304481a2a';
 const telegramId = 1054413208; // for debug API telegramId = 123456
-// const apiUrl = "http://localhost:8080"
-const apiUrl = "https://debug.soda4d.com";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export const httpClient = axios.create({
   baseURL: apiUrl,
   headers: {
-    // 'api_token': apiToken,
-    // 'telegram_id': telegramId,
-    tg_query: 'query_id=AAGYEdk-AAAAAJgR2T7stF57&user=%7B%22id%22%3A1054413208%2C%22first_name%22%3A%22Fyodor%22%2C%22last_name%22%3A%22Khruschov%22%2C%22username%22%3A%22elevenmins%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1721316039&hash=69bf3ee5020e663b85db82e3d321956a28e334929781977249aa46d5eb4df934'
+    'telegram_id': telegramId,
   }
 });
 
