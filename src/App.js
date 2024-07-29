@@ -70,7 +70,10 @@ const App = () => {
       setSelectedFiles([]);
       fileInputRef.current.value = null;
     }else{
-      setErrorMessage('Ошибка');
+      setErrorMessage(result.error || 'Ошибка');
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 4000)
       setSuccessMessage('');
     }
 
