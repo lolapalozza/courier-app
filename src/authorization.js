@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import {httpClient} from "./api.js";
 
 const INTERVAL = 500
