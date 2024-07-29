@@ -9,17 +9,17 @@ export const authorization = {
   init: async() => {
     return new Promise((resolve, reject) => {
       const interval = setInterval(() => {
-        // if (window.Telegram &&
-        //   window.Telegram.WebApp.initDataUnsafe &&
-        //   window.Telegram.WebApp.initDataUnsafe.user) {
+        if (window.Telegram &&
+          window.Telegram.WebApp.initDataUnsafe &&
+          window.Telegram.WebApp.initDataUnsafe.user) {
           clearInterval(interval);
           const initData = window.Telegram.WebApp.initData;
-          const result = authorization.isValidHash(initData);
+          // const result = authorization.isValidHash(initData);
           // if (result) {
-            httpClient.defaults.headers['tg_query'] = initData;
+          httpClient.defaults.headers['tg_query'] = initData;
           // }
           resolve({ result: true, tg_query: initData });
-        // }
+        }
       }, INTERVAL);
     });
   },
