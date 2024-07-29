@@ -5,7 +5,7 @@ const telegramId = 1054413208; // for debug API telegramId = 123456
 // const apiUrl = "http://localhost:8080"
 const apiUrl = "https://debug.soda4d.com";
 
-const httpClient = axios.create({
+export const httpClient = axios.create({
   baseURL: apiUrl,
   headers: {
     // 'api_token': apiToken,

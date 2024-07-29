@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Box, Typography, Autocomplete, CircularProgress, Grid, IconButton } from '@mui/material';
 import {fetchCities, fetchDistricts, fetchPackages, fetchProducts, submitDrop} from "./api.js";
+import {authorization} from "./authorization.js";
 
 const App = () => {
   const { control, handleSubmit, setValue } = useForm();
@@ -14,12 +15,25 @@ const App = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
   const fileInputRef = useRef();
 
+  const [isAuth, setIsAuth] = useState(false)
+
   useEffect(() => {
-    fetchCities().then(setCities).catch((error) => console.error(error));
-    fetchProducts().then(setProducts).catch((error) => console.error(error));
-  }, []);
+    authorization.init().then((data) => {
+      if(data.result){
+        setIsAuth(true)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    if(isAuth){
+      fetchCities().then(setCities).catch((error) => console.error(error));
+      fetchProducts().then(setProducts).catch((error) => console.error(error));
+    }
+  }, [isAuth]);
 
   const onSubmit = async (data) => {
     if (selectedFiles.length === 0) {
