@@ -95,151 +95,153 @@ const App = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 600, margin: 'auto', padding: 2, bgColor: "fff" }}>
-      <Grid container spacing={2}>
+    <div style={{backgroundColor: "#fff"}}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 600, margin: 'auto', padding: 2, bgColor: "fff" }}>
+        <Grid container spacing={2}>
 
-        {/*{isAuth ? "AUTH" : "NOT AUTH"}*/}
+          {/*{isAuth ? "AUTH" : "NOT AUTH"}*/}
 
-        <Grid item xs={12}>
-          <Controller
-            name="city"
-            control={control}
-            render={({ field }) => (
-              <Autocomplete
-                {...field}
-                options={cities}
-                getOptionLabel={(option) => option.name || ''}
-                renderInput={(params) => <TextField {...params} label="Выбери город" />}
-                value={field.value || null}
-                onChange={(_, data) => {
-                  field.onChange(data);
-                  setDistrictsLoading(true);
-                  fetchDistricts(data.id).then((districts) => {
-                    setDistricts(districts);
-                    setDistrictsLoading(false);
-                  }).catch((error) => {
-                    console.error(error);
-                    setDistrictsLoading(false);
-                  });
-                }}
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          {districtsLoading ? <CircularProgress /> : (
+          <Grid item xs={12}>
             <Controller
-              name="district"
-              control={control}
-              render={({ field }) => (
-                <Autocomplete
-                  {...field}
-                  options={districts}
-                  getOptionLabel={(option) => option.district || ''}
-                  renderInput={(params) => <TextField {...params} label="Выбери район" />}
-                  value={field.value || null}
-                  onChange={(_, data) => field.onChange(data)}
-                />
-              )}
+                name="city"
+                control={control}
+                render={({ field }) => (
+                    <Autocomplete
+                        {...field}
+                        options={cities}
+                        getOptionLabel={(option) => option.name || ''}
+                        renderInput={(params) => <TextField {...params} label="Выбери город" />}
+                        value={field.value || null}
+                        onChange={(_, data) => {
+                          field.onChange(data);
+                          setDistrictsLoading(true);
+                          fetchDistricts(data.id).then((districts) => {
+                            setDistricts(districts);
+                            setDistrictsLoading(false);
+                          }).catch((error) => {
+                            console.error(error);
+                            setDistrictsLoading(false);
+                          });
+                        }}
+                    />
+                )}
             />
-          )}
-        </Grid>
-        <Grid item xs={12}>
-          <Controller
-            name="product"
-            control={control}
-            render={({ field }) => (
-              <Autocomplete
-                {...field}
-                options={Object.keys(products).map(key => ({ id: key, ...products[key] }))}
-                getOptionLabel={(option) => option.short_description || ''}
-                renderInput={(params) => <TextField {...params} label="Выбери продукт" />}
-                value={field.value || null}
-                onChange={(_, data) => {
-                  field.onChange(data);
-                  setPackagesLoading(true);
-                  fetchPackages(data.id).then((packages) => {
-                    setPackages(packages);
-                    setPackagesLoading(false);
-                  }).catch((error) => {
-                    console.error(error);
-                    setPackagesLoading(false);
-                  });
-                }}
-              />
+          </Grid>
+          <Grid item xs={12}>
+            {districtsLoading ? <CircularProgress /> : (
+                <Controller
+                    name="district"
+                    control={control}
+                    render={({ field }) => (
+                        <Autocomplete
+                            {...field}
+                            options={districts}
+                            getOptionLabel={(option) => option.district || ''}
+                            renderInput={(params) => <TextField {...params} label="Выбери район" />}
+                            value={field.value || null}
+                            onChange={(_, data) => field.onChange(data)}
+                        />
+                    )}
+                />
             )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          {packagesLoading ? <CircularProgress /> : (
+          </Grid>
+          <Grid item xs={12}>
             <Controller
-              name="package"
-              control={control}
-              render={({ field }) => (
-                <Autocomplete
-                  {...field}
-                  options={packages}
-                  getOptionLabel={(option) => option.name || option.quantity.toString() || ''}
-                  renderInput={(params) => <TextField {...params} label="Выбери мороженое" />}
-                  value={field.value || null}
-                  onChange={(_, data) => field.onChange(data)}
-                />
-              )}
+                name="product"
+                control={control}
+                render={({ field }) => (
+                    <Autocomplete
+                        {...field}
+                        options={Object.keys(products).map(key => ({ id: key, ...products[key] }))}
+                        getOptionLabel={(option) => option.short_description || ''}
+                        renderInput={(params) => <TextField {...params} label="Выбери продукт" />}
+                        value={field.value || null}
+                        onChange={(_, data) => {
+                          field.onChange(data);
+                          setPackagesLoading(true);
+                          fetchPackages(data.id).then((packages) => {
+                            setPackages(packages);
+                            setPackagesLoading(false);
+                          }).catch((error) => {
+                            console.error(error);
+                            setPackagesLoading(false);
+                          });
+                        }}
+                    />
+                )}
             />
-          )}
-        </Grid>
-        <Grid item xs={12}>
-          <Controller
-            name="comment"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Введи комментарий"
-                multiline
-                rows={3}
-                fullWidth
-              />
+          </Grid>
+          <Grid item xs={12}>
+            {packagesLoading ? <CircularProgress /> : (
+                <Controller
+                    name="package"
+                    control={control}
+                    render={({ field }) => (
+                        <Autocomplete
+                            {...field}
+                            options={packages}
+                            getOptionLabel={(option) => option.name || option.quantity.toString() || ''}
+                            renderInput={(params) => <TextField {...params} label="Выбери мороженое" />}
+                            value={field.value || null}
+                            onChange={(_, data) => field.onChange(data)}
+                        />
+                    )}
+                />
             )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            ref={fileInputRef}
-          />
-          <Grid container spacing={1}>
-            {selectedFiles.map((file, index) => (
-              <Grid item key={index}>
-                <Typography variant="body2">
-                  {file.name}
-                  <IconButton size="small" onClick={() => handleFileRemove(index)}>
-                    x
-                  </IconButton>
-                </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Controller
+                name="comment"
+                control={control}
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label="Введи комментарий"
+                        multiline
+                        rows={3}
+                        fullWidth
+                    />
+                )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <input
+                type="file"
+                multiple
+                onChange={handleFileChange}
+                ref={fileInputRef}
+            />
+            <Grid container spacing={1}>
+              {selectedFiles.map((file, index) => (
+                  <Grid item key={index}>
+                    <Typography variant="body2">
+                      {file.name}
+                      <IconButton size="small" onClick={() => handleFileRemove(index)}>
+                        x
+                      </IconButton>
+                    </Typography>
+                  </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Отправить
+            </Button>
+          </Grid>
+          {successMessage && (
+              <Grid item xs={12}>
+                <Typography color="green">{successMessage}</Typography>
               </Grid>
-            ))}
-          </Grid>
+          )}
+          {errorMessage && (
+              <Grid item xs={12}>
+                <Typography color="red">{errorMessage}</Typography>
+              </Grid>
+          )}
         </Grid>
-        <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
-            Отправить
-          </Button>
-        </Grid>
-        {successMessage && (
-          <Grid item xs={12}>
-            <Typography color="green">{successMessage}</Typography>
-          </Grid>
-        )}
-        {errorMessage && (
-          <Grid item xs={12}>
-            <Typography color="red">{errorMessage}</Typography>
-          </Grid>
-        )}
-      </Grid>
-    </Box>
+      </Box>
+    </div>
   );
 };
 
