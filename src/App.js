@@ -181,7 +181,7 @@ const App = () => {
                             {...field}
                             options={packages}
                             getOptionLabel={(option) => option.name || option.quantity.toString() || ''}
-                            renderInput={(params) => <TextField {...params} label="Выбери мороженое" />}
+                            renderInput={(params) => <TextField {...params} label="Выбери package" />}
                             value={field.value || null}
                             onChange={(_, data) => field.onChange(data)}
                         />
