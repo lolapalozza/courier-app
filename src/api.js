@@ -7,6 +7,7 @@ export const httpClient = axios.create({
   baseURL: apiUrl,
   headers: {
     'telegram_id': telegramId,
+    "app": "courier"
   }
 });
 
