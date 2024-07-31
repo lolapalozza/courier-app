@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const telegramId = 1054413208; //
+const telegramId = 1; //this is for local development
+
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const httpClient = axios.create({
@@ -71,4 +72,9 @@ export const submitDrop = async (formData) => {
       error: e.message
     }
   }
+}
+
+export const getUser = async() => {
+  const user = await httpClient.get(apiUrl + `/user`)
+  return user.data;
 }

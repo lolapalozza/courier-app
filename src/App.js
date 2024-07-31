@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Box, Typography, Autocomplete, CircularProgress, Grid, IconButton } from '@mui/material';
-import {fetchCities, fetchDistricts, fetchPackages, fetchProducts, submitDrop} from "./api.js";
+import {fetchCities, fetchDistricts, fetchPackages, fetchProducts, getUser, submitDrop} from "./api.js";
 import {authorization} from "./authorization.js";
 
 const App = () => {
@@ -19,6 +19,7 @@ const App = () => {
   const fileInputRef = useRef();
 
   const [isAuth, setIsAuth] = useState(false)
+  const [user, setUser] = useState({})
 
   useEffect(() => {
     if(process.env.REACT_APP_ENV === 'local'){
@@ -37,6 +38,7 @@ const App = () => {
     if(isAuth){
       fetchCities().then(setCities).catch((error) => console.error(error));
       fetchProducts().then(setProducts).catch((error) => console.error(error));
+      getUser().then(setUser).catch((error) => console.error(error))
     }
   }, [isAuth]);
 
@@ -98,7 +100,12 @@ const App = () => {
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ maxWidth: 600, margin: 'auto', padding: 2, bgColor: "fff" }}>
       <Grid container spacing={2}>
 
-        {/*{isAuth ? "AUTH" : "NOT AUTH"}*/}
+        <div className="greet-container">
+          <div style={{backgroundColor: user.isCourier ? "darkseagreen" : "coral"}} className="text">
+            <div>Hello, {user.full_name}</div>
+            <div className="courier-text">{user.isCourier ? "You can add drops" : "You can't add drops"}</div>
+          </div>
+        </div>
 
         <Grid item xs={12}>
           <Controller
