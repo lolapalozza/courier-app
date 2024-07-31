@@ -68,7 +68,7 @@ export const submitDrop = async (formData) => {
   } catch(e){
     return {
       success: false,
-      error: "user is not a courier"
+      error: e.message
     }
   }
 }
