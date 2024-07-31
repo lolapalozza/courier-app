@@ -15,6 +15,7 @@ const App = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false)
 
   const fileInputRef = useRef();
 
@@ -43,9 +44,12 @@ const App = () => {
   }, [isAuth]);
 
   const onSubmit = async (data) => {
+    setLoading(true)
+
     if (selectedFiles.length === 0) {
       setErrorMessage('Ошибка: добавьте файлы');
       setSuccessMessage('');
+      setLoading(false)
       return;
     }
 
@@ -66,6 +70,7 @@ const App = () => {
     const result = await submitDrop(formData)
 
     if(result.success){
+      setLoading(false)
       setSuccessMessage('Успех');
 
       setTimeout(() => {
@@ -77,6 +82,7 @@ const App = () => {
       setSelectedFiles([]);
       fileInputRef.current.value = null;
     }else{
+      setLoading(false)
       setErrorMessage(result.error || 'Ошибка');
       setTimeout(() => {
         setErrorMessage("")
@@ -231,9 +237,12 @@ const App = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <Button disabled={loading} type="submit" variant="contained" color="primary" fullWidth>
             Отправить
           </Button>
+          {
+            loading && <div className="lds-dual-ring"></div>
+          }
         </Grid>
         {successMessage && (
             <Grid item xs={12}>
