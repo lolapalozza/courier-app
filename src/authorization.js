@@ -4,8 +4,9 @@ import CryptoJS from 'crypto-js';
 const INTERVAL = 500
 
 export const authorization = {
-  bot_token: '7435766909:AAG0Ue5yHw9h6YQ7p9AKvl1rL3usmeBNy9s',
+  bot_token: '7197588543:AAGbnF0BN60ShnECBGPnlHpJj2ugTQYgnnA',
 
+  //in courier app we dont check auth on client because of troubles with crypto lib (but check on backend)
   init: async() => {
     return new Promise((resolve, reject) => {
       const interval = setInterval(() => {
