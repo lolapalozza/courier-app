@@ -220,6 +220,7 @@ const App = () => {
           <input
               type="file"
               multiple
+              accept="image/*"
               onChange={handleFileChange}
               ref={fileInputRef}
           />

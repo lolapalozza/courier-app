@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const telegramId = 1; //this is for local development
+const telegramId = 8; //this is for local development
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
