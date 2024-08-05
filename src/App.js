@@ -222,15 +222,9 @@ const App = () => {
         <Grid item xs={12}>
           <input
               type="file"
-              multiple
               accept="image/*"
               onChange={handleFileChange}
               ref={fileInputRef}
-          />
-          <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
           />
           <Grid container spacing={1}>
             {selectedFiles.map((file, index) => (
