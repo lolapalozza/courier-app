@@ -93,6 +93,9 @@ const App = () => {
   };
 
   const handleFileChange = (e) => {
+    console.log(e)
+    console.log(e.target.files)
+    console.log(e.target.files[0])
     setSelectedFiles([...e.target.files]);
   };
 
@@ -224,6 +227,11 @@ const App = () => {
               onChange={handleFileChange}
               ref={fileInputRef}
           />
+          <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+          />
           <Grid container spacing={1}>
             {selectedFiles.map((file, index) => (
                 <Grid item key={index}>
@@ -242,7 +250,7 @@ const App = () => {
             Отправить
           </Button>
           {
-            loading && <div className="lds-dual-ring"></div>
+          loading && <div className="lds-dual-ring"></div>
           }
         </Grid>
         {successMessage && (
