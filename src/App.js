@@ -226,18 +226,18 @@ const App = () => {
               onChange={handleFileChange}
               ref={fileInputRef}
           />
-          <Grid container spacing={1}>
-            {selectedFiles.map((file, index) => (
-                <Grid item key={index}>
-                  <Typography variant="body2">
-                    {file.name}
-                    <IconButton size="small" onClick={() => handleFileRemove(index)}>
-                      x
-                    </IconButton>
-                  </Typography>
-                </Grid>
-            ))}
-          </Grid>
+          {/*<Grid container spacing={1}>*/}
+          {/*  {selectedFiles.map((file, index) => (*/}
+          {/*      <Grid item key={index}>*/}
+          {/*        <Typography variant="body2">*/}
+          {/*          {file.name}*/}
+          {/*          <IconButton size="small" onClick={() => handleFileRemove(index)}>*/}
+          {/*            x*/}
+          {/*          </IconButton>*/}
+          {/*        </Typography>*/}
+          {/*      </Grid>*/}
+          {/*  ))}*/}
+          {/*</Grid>*/}
         </Grid>
         <Grid item xs={12}>
           <Button disabled={loading} type="submit" variant="contained" color="primary" fullWidth>
