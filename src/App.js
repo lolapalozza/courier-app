@@ -13,11 +13,16 @@ const App = () => {
   const [districtsLoading, setDistrictsLoading] = useState(false);
   const [packagesLoading, setPackagesLoading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const [selectedFile1, setSelectedFile1] = useState(null)
+  const [selectedFile2, setSelectedFile2] = useState(null)
+
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false)
 
-  const fileInputRef = useRef();
+  const fileInputRef1 = useRef();
+  const fileInputRef2 = useRef();
 
   const [isAuth, setIsAuth] = useState(false)
   const [user, setUser] = useState({})
@@ -46,7 +51,14 @@ const App = () => {
   const onSubmit = async (data) => {
     setLoading(true)
 
-    if (selectedFiles.length === 0) {
+    // if (selectedFiles.length === 0) {
+    //   setErrorMessage('Ошибка: добавьте файлы');
+    //   setSuccessMessage('');
+    //   setLoading(false)
+    //   return;
+    // }
+
+    if (selectedFile1 === null && selectedFile2 === null) {
       setErrorMessage('Ошибка: добавьте файлы');
       setSuccessMessage('');
       setLoading(false)
@@ -63,9 +75,17 @@ const App = () => {
     const formData = new FormData();
     formData.append('drop', JSON.stringify(dropData));
 
-    selectedFiles.forEach(file => {
-      formData.append('photos', file);
-    });
+    // selectedFiles.forEach(file => {
+    //   formData.append('photos', file);
+    // });
+
+    if(selectedFile1){
+      formData.append('photos', selectedFile1);
+    }
+
+    if(selectedFile2){
+      formData.append('photos', selectedFile2)
+    }
 
     const result = await submitDrop(formData)
 
@@ -80,7 +100,8 @@ const App = () => {
       setErrorMessage('');
       setValue('comment', '');
       setSelectedFiles([]);
-      fileInputRef.current.value = null;
+      fileInputRef1.current.value = null;
+      fileInputRef2.current.value = null;
     }else{
       setLoading(false)
       setErrorMessage(result.error || 'Ошибка');
@@ -92,17 +113,19 @@ const App = () => {
 
   };
 
-  const handleFileChange = (e) => {
-    console.log(e)
-    console.log(e.target.files)
-    console.log(e.target.files[0])
-    setSelectedFiles([...e.target.files]);
+  const handleFileChange1 = (e) => {
+    setSelectedFile1(e.target.files[0]);
+  };
+
+  const handleFileChange2 = (e) => {
+    setSelectedFile2(e.target.files[0]);
   };
 
   const handleFileRemove = (index) => {
     const updatedFiles = selectedFiles.filter((_, i) => i !== index);
     setSelectedFiles(updatedFiles);
-    fileInputRef.current.value = null;
+    fileInputRef1.current.value = null;
+    fileInputRef2.current.value = null;
   };
 
   return (
@@ -223,8 +246,14 @@ const App = () => {
           <input
               type="file"
               accept="image/*"
-              onChange={handleFileChange}
-              ref={fileInputRef}
+              onChange={handleFileChange1}
+              ref={fileInputRef1}
+          />
+          <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange2}
+              ref={fileInputRef2}
           />
           {/*<Grid container spacing={1}>*/}
           {/*  {selectedFiles.map((file, index) => (*/}
