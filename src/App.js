@@ -102,6 +102,8 @@ const App = () => {
       setSelectedFiles([]);
       fileInputRef1.current.value = null;
       fileInputRef2.current.value = null;
+      setSelectedFile1(null)
+      setSelectedFile2(null)
     }else{
       setLoading(false)
       setErrorMessage(result.error || 'Ошибка');
