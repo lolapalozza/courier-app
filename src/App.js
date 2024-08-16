@@ -5,7 +5,7 @@ import {fetchCities, fetchDistricts, fetchPackages, fetchProducts, getUser, subm
 import {authorization} from "./authorization.js";
 
 const App = () => {
-  const { control, handleSubmit, setValue } = useForm();
+  const { control, handleSubmit, setValue, reset } = useForm();
   const [cities, setCities] = useState([]);
   const [products, setProducts] = useState({});
   const [districts, setDistricts] = useState([]);
@@ -99,6 +99,10 @@ const App = () => {
 
       setErrorMessage('');
       setValue('comment', '');
+
+      setValue('product', null);
+      setValue('package', null);
+
       setSelectedFiles([]);
       fileInputRef1.current.value = null;
       fileInputRef2.current.value = null;
