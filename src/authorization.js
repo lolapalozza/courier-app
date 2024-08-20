@@ -4,7 +4,7 @@ import CryptoJS from 'crypto-js';
 const INTERVAL = 500
 
 export const authorization = {
-  bot_token: '7197588543:AAGbnF0BN60ShnECBGPnlHpJj2ugTQYgnnA',
+  bot_token: process.env.NEXT_PUBLIC_BOT_TOKEN,
 
   //in courier app we dont check auth on client because of troubles with crypto lib (but check on backend)
   init: async() => {
