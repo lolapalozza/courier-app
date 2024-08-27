@@ -15,10 +15,7 @@ export const authorization = {
           window.Telegram.WebApp.initDataUnsafe.user) {
           clearInterval(interval);
           const initData = window.Telegram.WebApp.initData;
-          // const result = authorization.isValidHash(initData);
-          // if (result) {
           httpClient.defaults.headers['tg_query'] = initData;
-          // }
           resolve({ result: true, tg_query: initData });
         }
       }, INTERVAL);
