@@ -46,6 +46,17 @@ export const fetchDistricts = async (cityId) => {
   }
 };
 
+export const fetchCouriers = async () => {
+  try {
+    const response = await httpClient.get(`${apiUrl}/couriers`);
+    console.log('Fetched couriers:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch districts:', error);
+    return [];
+  }
+};
+
 export const fetchPackages = async (productId) => {
   try {
     const response = await httpClient.get(`${apiUrl}/products/${productId}/packages`);

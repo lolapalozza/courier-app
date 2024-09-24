@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextField, Button, Box, Typography, Autocomplete, CircularProgress, Grid, IconButton } from '@mui/material';
-import {fetchCities, fetchDistricts, fetchPackages, fetchProducts, getUser, submitDrop} from "./api.js";
+import {fetchCities, fetchCouriers, fetchDistricts, fetchPackages, fetchProducts, getUser, submitDrop} from "./api.js";
 import {authorization} from "./authorization.js";
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
   const [products, setProducts] = useState({});
   const [districts, setDistricts] = useState([]);
   const [packages, setPackages] = useState([]);
+  const [couriers, setCouriers] = useState([]);
   const [districtsLoading, setDistrictsLoading] = useState(false);
   const [packagesLoading, setPackagesLoading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -44,19 +45,19 @@ const App = () => {
     if(isAuth){
       fetchCities().then(setCities).catch((error) => console.error(error));
       fetchProducts().then(setProducts).catch((error) => console.error(error));
-      getUser().then(setUser).catch((error) => console.error(error))
+      getUser().then((user) => {
+        setUser(user)
+        if(user.isAdmin || user.isOperator){
+          fetchCouriers().then((couriers) => {
+            setCouriers(couriers)
+          })
+        }
+      }).catch((error) => console.error(error))
     }
   }, [isAuth]);
 
   const onSubmit = async (data) => {
     setLoading(true)
-
-    // if (selectedFiles.length === 0) {
-    //   setErrorMessage('Ошибка: добавьте файлы');
-    //   setSuccessMessage('');
-    //   setLoading(false)
-    //   return;
-    // }
 
     if (selectedFile1 === null && selectedFile2 === null) {
       setErrorMessage('Ошибка: добавьте файлы');
@@ -71,6 +72,10 @@ const App = () => {
       packageId: data.package.id,
       comment: data.comment
     };
+
+    if(user.isAdmin && data.courier){
+      dropData.courierId = data.courier.user_id
+    }
 
     const formData = new FormData();
     formData.append('drop', JSON.stringify(dropData));
@@ -144,6 +149,27 @@ const App = () => {
             <div className="courier-text">{user.isCourier ? "You can add drops" : "You can't add drops"}</div>
           </div>
         </div>
+
+        {
+            (user.isAdmin || user.isOperator) && <Grid item xs={12}>
+              <Controller
+                  name="courier"
+                  control={control}
+                  render={({ field }) => (
+                      <Autocomplete
+                          {...field}
+                          options={couriers}
+                          getOptionLabel={(option) => option.full_name || ''}
+                          renderInput={(params) => <TextField {...params} label="Выбери курьера" />}
+                          value={field.user_id || null}
+                          onChange={(_, data) => {
+                            field.onChange(data);
+                          }}
+                      />
+                  )}
+              />
+            </Grid>
+        }
 
         <Grid item xs={12}>
           <Controller
