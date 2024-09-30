@@ -163,7 +163,7 @@ const App = () => {
                           renderInput={(params) => <TextField {...params} label="Выбери курьера" />}
                           value={field.user_id || null}
                           onChange={(_, data) => {
-                            field.onChange(data);
+                            field.onChange(data ? data.user_id : null); // Исправлено
                           }}
                       />
                   )}
