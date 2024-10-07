@@ -73,8 +73,8 @@ const App = () => {
       comment: data.comment
     };
 
-    if(user.isAdmin && data.courier){
-      dropData.courierId = data.courier.user_id
+    if((user.isAdmin || user.isOperator) && data.courier){
+      dropData.courierId = data.courier
     }
 
     const formData = new FormData();
@@ -161,7 +161,7 @@ const App = () => {
                           options={couriers}
                           getOptionLabel={(option) => option.full_name || ''}
                           renderInput={(params) => <TextField {...params} label="Выбери курьера" />}
-                          value={field.user_id || null}
+                          value={couriers.find(courier => courier.user_id === field.value) || null}
                           onChange={(_, data) => {
                             field.onChange(data ? data.user_id : null); // Исправлено
                           }}
