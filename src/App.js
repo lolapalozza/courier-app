@@ -275,20 +275,38 @@ const App = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange1}
-              ref={fileInputRef1}
-          />
-          <input
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange2}
-              ref={fileInputRef2}
-          />
+          <div>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange1}
+                ref={fileInputRef1}
+            />
+            {
+                selectedFile1 && <img
+                    src={URL.createObjectURL(selectedFile1)}
+                    alt="Thumbnail"
+                    style={{width: "100px", height: "100px", objectFit: "cover"}}
+                />
+            }
+          </div>
+          <div>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange2}
+                ref={fileInputRef2}
+            />
+            {
+                selectedFile2 && <img
+                    src={URL.createObjectURL(selectedFile2)}
+                    alt="Thumbnail"
+                    style={{width: "100px", height: "100px", objectFit: "cover"}}
+                />
+            }
+          </div>
           {/*<Grid container spacing={1}>*/}
-          {/*  {selectedFiles.map((file, index) => (*/}
+          {/*  {[selectedFile1, selectedFile2].map((file, index) => (*/}
           {/*      <Grid item key={index}>*/}
           {/*        <Typography variant="body2">*/}
           {/*          {file.name}*/}
