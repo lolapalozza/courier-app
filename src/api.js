@@ -90,3 +90,23 @@ export const getUser = async() => {
   const user = await httpClient.get(apiUrl + `/user`)
   return user.data;
 }
+
+export const getDrops = async({userId, offset=0, limit=10}) => {
+  const params = new URLSearchParams();
+  params.append('limit', limit);
+  params.append('offset', offset);
+  const queryString = params.toString();
+
+  const response = await httpClient.get(apiUrl + `/courier/${userId}/drops?${queryString}`)
+  return response.data;
+}
+
+export const getDropById = async(dropId) => {
+  const response = await httpClient.get(apiUrl + `/drop?drop_id=${dropId}`)
+  return response.data
+}
+
+export const deleteDrop = async(dropId) => {
+  const response = await httpClient.delete(apiUrl + `/drop/${dropId}`)
+  return response.data
+}
