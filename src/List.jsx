@@ -47,7 +47,7 @@ export const DropsList = ({user}) => {
             <td>Продукт</td>
             <td>Количество</td>
             <td>Коммент</td>
-            <td>Дата Заказа</td>
+            <td>Дата Создания</td>
             <td></td>
           </tr>
           </thead>
@@ -64,7 +64,7 @@ export const DropsList = ({user}) => {
                 {drop.comment}
               </td>
               <td>
-                {formatDate(drop.soldAt)}
+                {formatDate(drop.createdAt)}
               </td>
               <td>
                 <button onClick={() => goToDrop(drop.id)}>
